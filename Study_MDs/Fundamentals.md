@@ -21,3 +21,17 @@ Key steps include:
 
 7. Rendering: Combine the aligned and blended images into a single panoramic image. This may involve cropping to remove unwanted edges and adjusting the final image's exposure and color balance.
 
+## Explaining Each Part
+
+## SIFT (Scale-Invariant Feature Transform (SIFT))
+> [!INFO] [video playlist here](https://www.youtube.com/watch?v=KgsHoJYJ4S8&list=PLlCkKK04bmVlvCs-S-2DnGf08MY2Hdd0n)
+
+- This is an algorithm that **identifies distinctive keypoints** (step 2), often "blobs", that remain **robust and consistent across varying scales, rotations, and lighting conditions**
+    - Uses include object recognition, robotic mapping and navigation, image stitching, 3D modeling, gesture recognition, video tracking, individual identification of wildlife and match moving.
+- What is an interest point?
+    - It is usally determined as a "blob" with a local appearence within it.
+- A lot of the algorithm here is based in **blob detection theory.**
+    - Methods used to identify such elements can detect the determined blobs over multiple scales, positions and magnification
+- Basically, with this we can create a **SIFT Detector**
+- With a SIFT detector, we can detect the points of interest. However, to match interest points in two images you need a signature that descriptes the local appearence, and that is when we need to have a **SIFT Descriptor**.
+
