@@ -35,3 +35,55 @@ Key steps include:
 - Basically, with this we can create a **SIFT Detector**
 - With a SIFT detector, we can detect the points of interest. However, to match interest points in two images you need a signature that descriptes the local appearence, and that is when we need to have a **SIFT Descriptor**.
 
+## What is an Interest Point?
+- **In simple terms** (as said before): It is usally determined as a "blob" with a local appearence within it.
+- **In a formal way**: a 2D position that has a well-defined, mathematically computable representation, and possesses distinct, rich local information.
+    - It is basically and element of the image that clearly distinguish it from more "generic" or similar objects and can be used as referecence
+- Even after determing this element, we still have to be able to identify it in different settings/use cases
+    - With that, it is required that we remove some sources of variation
+    - Example: Scale, orientation...
+    - Ligthness need to be a more insenstive case
+- And remember:
+
+![alt text](image.png)
+
+### What is an interest point composed of?
+- Has rich image content (brightness variation, color variation...) so that it is "unique"
+- Has well-defined representation (signature)
+    - We can create a fingerprint of the point. This describes:
+    - brightness patterns
+    - edges
+    - textures
+    - gradients
+- Has a well-defined position
+    - Sharp corners to determine an exact location
+    - Blurry regions are bad for example
+- Invariant to image rotation and scaling
+    - Even if we rotate, zoom in/out or magnify the image, still can be easily recognized
+- Insensitive to lighting changes
+    - The object should be recognizable in sunlight, indoors or even in slightly darker/brighter scenes
+- A blob-like feature covers a lot of this caractheristics
+- When we locate the blob, we need to determine its size
+    - It is a roughly determined area that "embraces" the blob
+- We also need to determine the orientation of the blob
+- Format the signature that is independent of size and orientation
+
+## Gausian Filter for Edge Detection
+- Gaussian filters and derivatives are fundamental tools in image processing
+- Typically used together to detect **features like edges while managing image noise**.
+
+### Denoising and Smoothing - Gausian Filters
+- A Gaussian filter is a low-pass filter used as a preprocessing step to reduce noise and blur fine details.
+    - **Low-pass filter**: The filter that preserves smooth variations and remove harsh details. It basically preservers the most important and natural features of the image while tunning higher frequences (fine detail, noise, contrats, textures...) down to make it more natural and approachable.
+    - **Mechanism**: It performs a weighted average where pixels closer to the center have more influence, modeled by a bell-shaped Gaussian distribution.
+    - **Purpose**: Because derivatives (the next step) are highly sensitive to pixel fluctuations, Gaussian smoothing prevents tiny noise spikes from being wrongly detected as edges.
+- Example:
+    - Imagine a very grainy photo:
+        - No filter → sharp image, but with noise.
+        - With low-pass → smoother/blurrier image.
+        - It’s basically a blurring effect.
+
+### Detecting Change - Image Derivatives:
+- Derivatives quantify the rate of change in pixel intensity across an image
+- First Derivative (Gradient): Measures the slope of intensity changes. High gradient magnitudes indicate sudden transitions, which are usually edges. Common operators like the Sobel Operator use first-order derivative approximations.
+- Second Derivative: Used to find zero-crossings, which precisely mark the center of an edge. The Laplacian operator is a common second-order filter.
